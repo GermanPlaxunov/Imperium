@@ -1,3 +1,5 @@
+package org.game.dto;
+
 public class CellDto {
     private int x;
     private int y;

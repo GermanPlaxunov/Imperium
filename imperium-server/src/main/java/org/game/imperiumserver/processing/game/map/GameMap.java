@@ -10,6 +10,7 @@ public class GameMap {
     private int width;
     private int height;
     private int cellSize;
+    private Cell selected;
     private List<Cell> cells;
 
 }
