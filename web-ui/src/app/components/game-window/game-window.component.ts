@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {ColorSelector} from "../../map/ColorSelector";
+import {Component, OnInit} from '@angular/core';
 import {MapRenderer} from "../../map/MapRenderer";
+import {GameMap} from "../../model/GameMap";
+import {GameMapService} from "../../services/GameMapService";
+import {Cell} from "../../model/Cell";
 
 @Component({
   selector: 'app-game-window',
@@ -9,19 +11,32 @@ import {MapRenderer} from "../../map/MapRenderer";
 })
 export class GameWindowComponent implements OnInit {
 
+  gameMap?: GameMap;
+  cells?: Cell[];
+
   private mapRenderer: MapRenderer = new MapRenderer(500, 500, 50);
 
-  constructor() {
+  constructor(private gameMapService: GameMapService) {
   }
 
   ngOnInit(): void {
-    this.initMap();
+    this.gameMapService.generateMap().subscribe(
+      map => {
+        let cells = [];
+        for(let i = 0; i < map.cells.length; i++){
+          console.log(map.cells[i].color);
+          cells[i] = new Cell(map.cells[i].x, map.cells[i].y, map.cells[i].color);
+        }
+        this.gameMap = new GameMap(map.width, map.height, map.cellSize, map.selected, cells);
+        this.initMap()
+      }
+    );
   }
 
-  initMap(): void{
+  initMap(): void {
     let canvas = document.getElementById("mapCanvas") as HTMLCanvasElement;
     let context = canvas.getContext("2d")!;
-    this.mapRenderer.renderMap(context);
+    this.mapRenderer.renderMap(context, this.gameMap!);
   }
 
   onClick($event: MouseEvent) {

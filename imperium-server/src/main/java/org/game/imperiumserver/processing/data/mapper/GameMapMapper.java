@@ -12,8 +12,7 @@ public interface GameMapMapper {
     @Mappings({
             @Mapping(source = "width", target = "width"),
             @Mapping(source = "height", target = "height"),
-            @Mapping(source = "cellSize", target = "cellSize"),
-            @Mapping(source = "cells", target = "cells")
+            @Mapping(source = "cellSize", target = "cellSize")
     })
     GameMapDto toDto(GameMap map);
 }

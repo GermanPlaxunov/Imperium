@@ -1,8 +1,7 @@
-import {ColorSelector} from "./ColorSelector";
+import {GameMap} from "../model/GameMap";
 
 export class MapRenderer {
 
-  private colorSelector = new ColorSelector();
   private readonly canvasWidth: number;
   private readonly canvasHeight: number;
   private readonly cellSize: number;
@@ -13,11 +12,12 @@ export class MapRenderer {
     this.cellSize = cellSize;
   }
 
-  public renderMap(canvasContext: any) {
-    for (let i = 0; i < this.canvasWidth; i += this.cellSize) {
-      for (let j = 0; j < this.canvasHeight; j += this.cellSize) {
-        canvasContext.fillStyle = this.colorSelector.randomColor();
-        canvasContext.fillRect(i, j, this.cellSize, this.cellSize);
+  public renderMap(canvasContext: any, map: GameMap) {
+    let cellNumber = 0;
+    for (let i = 0; i < map.height / map.cellSize; i++) {
+      for (let j = 0; j < map.width / map.cellSize; j++) {
+        canvasContext.fillStyle = map.cells[cellNumber++].color;
+        canvasContext.fillRect(i * map.cellSize, j * map.cellSize, map.cellSize, map.cellSize);
       }
     }
   }
@@ -32,7 +32,7 @@ export class MapRenderer {
     canvasContext.clearRect(50, 50, 50, 50);
   }
 
-  private getCellNumberX(x: number) : number{
+  private getCellNumberX(x: number): number {
     let mapSize = this.canvasWidth / this.cellSize;
     let x_1 = 0;
     let x_2 = x_1 + this.cellSize;
@@ -47,7 +47,7 @@ export class MapRenderer {
     return 0;
   }
 
-  private getCellNumberY(y: number) : number{
+  private getCellNumberY(y: number): number {
     let mapSize = this.canvasWidth / this.cellSize;
     let y_1 = 0;
     let y_2 = y_1 + this.cellSize;

@@ -20,7 +20,7 @@ public class MapInitializer {
     public GameMap initMap() {
         var colorSelector = new TeamColorSelector();
         var cells = new ArrayList<Cell>();
-        var map = new GameMap();
+        var map = new GameMap(width, height, cellSize);
         for (var x = 0; x < width / cellSize; x ++) {
             for(var y = 0; y < height / cellSize; y ++){
                 cells.add(new Cell(x, y, new CellState(colorSelector.getRandomColor())));
