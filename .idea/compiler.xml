@@ -11,6 +11,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Imperium" />
+      </profile>
+    </annotationProcessing>
+  </component>
       </profile>
       <profile name="Annotation profile for Imperium" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
