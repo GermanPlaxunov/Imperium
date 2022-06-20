@@ -1,0 +1,13 @@
+.game-action-panel {
+  position: relative;
+  left: 830px;
+  bottom: 500px;
+  width: 350px;
+  height: 600px;
+  border: 2px solid blue;
+}
+
+.action-panel-button {
+  margin: 3px 3px 3px 3px;
+  font-size: 16px;
+}
