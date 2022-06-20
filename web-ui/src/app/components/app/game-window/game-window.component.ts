@@ -52,6 +52,6 @@ export class GameWindowComponent implements OnInit {
     let yLabelValue = this.mapRenderer.getCellNumberY(y - rect.top).toString();
     xLabel!.textContent = "x: " + xLabelValue;
     yLabel!.textContent = "y: " + yLabelValue;
-    this.mapRenderer.selectMapCell(context, x - rect.left, y - rect.top);
+    this.mapRenderer.selectMapCell(context, this.gameMap!, x - rect.left, y - rect.top);
   }
 }

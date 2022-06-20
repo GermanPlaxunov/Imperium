@@ -1,4 +1,5 @@
 import {GameMap} from "../model/GameMap";
+import {map} from "rxjs";
 
 export class MapRenderer {
 
@@ -13,20 +14,24 @@ export class MapRenderer {
   }
 
   public renderMap(canvasContext: any, map: GameMap) {
-    let cellNumber = 0;
-    for (let i = 0; i < map.height / map.cellSize; i++) {
-      for (let j = 0; j < map.width / map.cellSize; j++) {
-        canvasContext.fillStyle = map.cells[cellNumber++].color;
+    let size = this.canvasWidth / this.cellSize;
+    for (let i = 0; i < size; i++) {
+      for (let j = 0; j < size; j++) {
+        canvasContext.fillStyle = map.cells[i * size + j].color;
         canvasContext.fillRect(i * map.cellSize, j * map.cellSize, map.cellSize, map.cellSize);
       }
     }
   }
 
-  public selectMapCell(canvasContext: any, x: number, y: number) {
+  public selectMapCell(canvasContext: any, map: GameMap, x: number, y: number) {
+    if (!(map.selected == null || map.selected.x == null || map.selected.y == null)) {
+      this.clearCurrentSelectedCell(map);
+    }
     let x_cell = this.getCellNumberX(x);
     let y_cell = this.getCellNumberY(y);
+    map.selected = map.cells[this.getCellNumberByCoordinates(x, y)];
     canvasContext.fillStyle = "black";
-    canvasContext.rect((x_cell * this.cellSize), (y_cell * this.cellSize) , this.cellSize, this.cellSize);
+    canvasContext.rect((x_cell * this.cellSize), (y_cell * this.cellSize), this.cellSize, this.cellSize);
     canvasContext.stroke();
   }
 
@@ -57,6 +62,19 @@ export class MapRenderer {
       y_2 += this.cellSize;
     }
     return 0;
+  }
+
+  private getCellNumberByCoordinates(x: number, y: number): number {
+    let mapWidth = this.canvasWidth / this.cellSize;
+    return y * mapWidth + x;
+  }
+
+  private clearCurrentSelectedCell(map: GameMap) {
+    let selectedX = map.selected.x;
+    let selectedY = map.selected.y;
+    console.log(selectedX + " " + selectedY);
+    //стереть выделенный
+    //закрасить его старым цветом
   }
 
 }
