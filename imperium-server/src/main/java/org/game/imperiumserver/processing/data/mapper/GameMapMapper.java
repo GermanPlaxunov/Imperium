@@ -10,8 +10,7 @@ import org.mapstruct.Mappings;
 public interface GameMapMapper {
 
     @Mappings({
-            @Mapping(source = "width", target = "width"),
-            @Mapping(source = "height", target = "height"),
+            @Mapping(source = "size", target = "size"),
             @Mapping(source = "cellSize", target = "cellSize")
     })
     GameMapDto toDto(GameMap map);

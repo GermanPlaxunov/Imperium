@@ -13,7 +13,7 @@ public class AppBeans {
 
     @Bean
     public MapInitializer mapInitializer() {
-        return new MapInitializer(500, 500, 50);
+        return new MapInitializer(500, 50);
     }
 
     @Bean

@@ -4,8 +4,7 @@ import java.util.List;
 
 public class GameMapDto {
 
-    private int width;
-    private int height;
+    private int size;
     private int cellSize;
     private CellDto selected;
     private List<CellDto> cells;
@@ -18,20 +17,12 @@ public class GameMapDto {
         this.selected = selected;
     }
 
-    public int getWidth() {
-        return width;
+    public int getSize() {
+        return size;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public int getCellSize() {

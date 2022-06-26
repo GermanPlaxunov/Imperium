@@ -50,8 +50,8 @@ export class GameWindowComponent implements OnInit {
     let yLabel = document.getElementById("yCellPosition");
     let xLabelValue = this.mapRenderer.getCellNumberX(x - rect.left).toString();
     let yLabelValue = this.mapRenderer.getCellNumberY(y - rect.top).toString();
-    xLabel!.textContent = "x: " + xLabelValue;
-    yLabel!.textContent = "y: " + yLabelValue;
+    xLabel!.textContent = "x: " + (Number(xLabelValue) + 1);
+    yLabel!.textContent = "y: " + (Number(yLabelValue) + 1);
     this.mapRenderer.selectMapCell(context, this.gameMap!, x - rect.left, y - rect.top);
   }
 }

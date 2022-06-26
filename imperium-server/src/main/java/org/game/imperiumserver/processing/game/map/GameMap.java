@@ -9,8 +9,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GameMap {
 
-    private final int width;
-    private final int height;
+    private final int size;
     private final int cellSize;
     private Cell selected;
     private List<Cell> cells;

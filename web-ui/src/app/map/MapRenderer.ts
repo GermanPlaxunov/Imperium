@@ -14,13 +14,19 @@ export class MapRenderer {
   }
 
   public renderMap(canvasContext: any, map: GameMap) {
-    let size = this.canvasWidth / this.cellSize;
-    for (let i = 0; i < size; i++) {
-      for (let j = 0; j < size; j++) {
-        canvasContext.fillStyle = map.cells[i * size + j].color;
-        canvasContext.fillRect(i * map.cellSize, j * map.cellSize, map.cellSize, map.cellSize);
-      }
+    let cell;
+    for(let i = 0; i < map.cells.length; i ++){
+      cell = map.cells[i];
+      canvasContext.fillStyle = cell.color;
+      canvasContext.fillRect(cell.x * this.cellSize, cell.y * this.cellSize, this.cellSize, this.cellSize);
     }
+    // let size = this.canvasWidth / this.cellSize;
+    // for (let i = 0; i < size; i++) {
+    //   for (let j = 0; j < size; j++) {
+    //     canvasContext.fillStyle = map.cells[i * size + j].color;
+    //     canvasContext.fillRect(i * map.cellSize, j * map.cellSize, map.cellSize, map.cellSize);
+    //   }
+    // }
   }
 
   public selectMapCell(canvasContext: any, map: GameMap, x: number, y: number) {
@@ -72,9 +78,6 @@ export class MapRenderer {
   private clearCurrentSelectedCell(map: GameMap) {
     let selectedX = map.selected.x;
     let selectedY = map.selected.y;
-    console.log(selectedX + " " + selectedY);
-    //стереть выделенный
-    //закрасить его старым цветом
   }
 
 }
