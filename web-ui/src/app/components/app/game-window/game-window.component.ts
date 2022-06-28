@@ -3,6 +3,7 @@ import {MapRenderer} from "../../../map/MapRenderer";
 import {GameMap} from "../../../model/GameMap";
 import {GameMapService} from "../../../services/GameMapService";
 import {Cell} from "../../../model/Cell";
+import {MapProcessor} from "../../../map/MapProcessor";
 
 @Component({
   selector: 'app-game-window',
@@ -11,14 +12,14 @@ import {Cell} from "../../../model/Cell";
 })
 export class GameWindowComponent implements OnInit {
 
-  gameMap?: GameMap;
-
-  private mapRenderer: MapRenderer;
   private canvas: HTMLCanvasElement;
+
+  private mapRenderer?: MapRenderer;
+  private mapProcessor?: MapProcessor;
+  private gameMap?: GameMap;
 
   constructor(private gameMapService: GameMapService) {
     this.canvas = document.getElementById("mapCanvas") as HTMLCanvasElement;
-    this.mapRenderer = new MapRenderer(500, 500, 50);
   }
 
   ngOnInit(): void {
@@ -29,6 +30,8 @@ export class GameWindowComponent implements OnInit {
           cells[i] = new Cell(map.cells[i].x, map.cells[i].y, map.cells[i].color);
         }
         this.gameMap = new GameMap(map.width, map.height, map.cellSize, map.selected, cells);
+        this.mapRenderer = new MapRenderer(this.gameMap);
+        this.mapProcessor = new MapProcessor(map.width, map.height, map.cellSize);
         this.initMap()
       }
     );
@@ -37,7 +40,7 @@ export class GameWindowComponent implements OnInit {
   initMap(): void {
     let canvas = document.getElementById("mapCanvas") as HTMLCanvasElement;
     let context = canvas.getContext("2d")!;
-    this.mapRenderer.renderMap(context, this.gameMap!);
+    this.mapRenderer!.renderMap(context, this.gameMap!);
   }
 
   onClick($event: MouseEvent) {
@@ -48,10 +51,10 @@ export class GameWindowComponent implements OnInit {
     let context = canvas.getContext("2d")!;
     let xLabel = document.getElementById("xCellPosition");
     let yLabel = document.getElementById("yCellPosition");
-    let xLabelValue = this.mapRenderer.getCellNumberX(x - rect.left).toString();
-    let yLabelValue = this.mapRenderer.getCellNumberY(y - rect.top).toString();
+    let xLabelValue = this.mapProcessor!.getCellNumberX(x - rect.left).toString();
+    let yLabelValue = this.mapProcessor!.getCellNumberY(y - rect.top).toString();
     xLabel!.textContent = "x: " + (Number(xLabelValue) + 1);
     yLabel!.textContent = "y: " + (Number(yLabelValue) + 1);
-    this.mapRenderer.selectMapCell(context, this.gameMap!, x - rect.left, y - rect.top);
+    this.mapRenderer!.selectMapCell(context, this.gameMap!, x - rect.left, y - rect.top);
   }
 }
