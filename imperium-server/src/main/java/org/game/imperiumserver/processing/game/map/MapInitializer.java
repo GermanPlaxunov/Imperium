@@ -13,37 +13,42 @@ import java.util.ArrayList;
 @Slf4j
 @AllArgsConstructor
 public class MapInitializer {
-    private final int mapSize;
-    private final Integer cellSize;
+    private final int width;
+    private final int height;
+    private final int cellSize;
 
     public GameMap initMap() {
         var cells = new ArrayList<Cell>();
-        var map = new GameMap(mapSize, cellSize);
-        var mapSideSize = (mapSize / cellSize) - 1;
-        for (var x = 0; x <= mapSideSize; x++) {
-            for (var y = 0; y <= mapSideSize; y++) {
+        var map = new GameMap(height, width, cellSize);
+        var mapWidth = (width / cellSize);
+        var mapHeight = (height / cellSize);
+        for (var x = 1; x < mapWidth - 1; x++) {
+            for (var y = 1; y < mapHeight - 1; y++) {
                 cells.add(new Cell(x, y, new CellState(TeamColors.GREY.getColor())));
             }
         }
         map.setCells(cells);
-        setTeamCellsOnCorners(map, mapSideSize);
+        setSideGreyCells(map, mapWidth - 1, mapHeight - 1);
+        setTeamCellsOnCorners(map, mapWidth - 1, mapHeight - 1);
         log.info("Map initialized. Map Size: {}", cells.size());
         return map;
     }
 
-    private void setTeamCellsOnCorners(GameMap map, int mapSideSize) {
+    private void setTeamCellsOnCorners(GameMap map, int mapWidth, int mapHeight) {
         map.getCells().add(new Cell(0, 0, new CellState(TeamColors.GREEN.getColor())));
-        map.getCells().add(new Cell(0, mapSideSize, new CellState(TeamColors.BLUE.getColor())));
-        map.getCells().add(new Cell(mapSideSize, 0, new CellState(TeamColors.RED.getColor())));
-        map.getCells().add(new Cell(mapSideSize, mapSideSize, new CellState(TeamColors.ORANGE.getColor())));
+        map.getCells().add(new Cell(0, mapWidth, new CellState(TeamColors.BLUE.getColor())));
+        map.getCells().add(new Cell(mapHeight, 0, new CellState(TeamColors.RED.getColor())));
+        map.getCells().add(new Cell(mapWidth, mapHeight, new CellState(TeamColors.ORANGE.getColor())));
     }
 
-    private void setSideGreyCells(GameMap map, int mapSideSize) {
-        for (var i = 1; i < mapSideSize - 1; i++) {
-            map.getCells().add(new Cell(0, i, new CellState(TeamColors.GREY.getColor())));
-            map.getCells().add(new Cell(mapSideSize, i, new CellState(TeamColors.GREY.getColor())));
+    private void setSideGreyCells(GameMap map, int mapWidth, int mapHeight) {
+        for (var i = 1; i < mapWidth; i++) {
             map.getCells().add(new Cell(i, 0, new CellState(TeamColors.GREY.getColor())));
-            map.getCells().add(new Cell(i, mapSideSize, new CellState(TeamColors.GREY.getColor())));
+            map.getCells().add(new Cell(i, mapHeight, new CellState(TeamColors.GREY.getColor())));
+        }
+        for(var i = 1; i < mapHeight; i++){
+            map.getCells().add(new Cell(0, i, new CellState(TeamColors.GREY.getColor())));
+            map.getCells().add(new Cell(mapWidth, i, new CellState(TeamColors.GREY.getColor())));
         }
     }
 }

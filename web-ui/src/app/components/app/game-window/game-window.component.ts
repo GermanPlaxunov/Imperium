@@ -16,7 +16,7 @@ export class GameWindowComponent implements OnInit {
 
   private mapRenderer?: MapRenderer;
   private mapProcessor?: MapProcessor;
-  private gameMap?: GameMap;
+  gameMap?: GameMap;
 
   constructor(private gameMapService: GameMapService) {
     this.canvas = document.getElementById("mapCanvas") as HTMLCanvasElement;
@@ -40,7 +40,7 @@ export class GameWindowComponent implements OnInit {
   initMap(): void {
     let canvas = document.getElementById("mapCanvas") as HTMLCanvasElement;
     let context = canvas.getContext("2d")!;
-    this.mapRenderer!.renderMap(context, this.gameMap!);
+    this.mapRenderer!.renderMap(context);
   }
 
   onClick($event: MouseEvent) {
