@@ -13,6 +13,8 @@ public interface CellMapper {
     @Mappings({
             @Mapping(source = "x", target = "x"),
             @Mapping(source = "y", target = "y"),
+            @Mapping(source = "cellState.army", target = "army"),
+            @Mapping(source = "cellState.population", target = "population"),
             @Mapping(source = "cellState.color", target = "color")
     })
     CellDto toDto(Cell cell);
@@ -20,6 +22,8 @@ public interface CellMapper {
     @Mappings({
             @Mapping(source = "x", target = "x"),
             @Mapping(source = "y", target = "y"),
+            @Mapping(source = "cellState.army", target = "army"),
+            @Mapping(source = "cellState.population", target = "population"),
             @Mapping(source = "cellState.color", target = "color")
     })
     List<CellDto> toDtos(List<Cell> cells);

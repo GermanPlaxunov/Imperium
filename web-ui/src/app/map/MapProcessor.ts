@@ -1,19 +1,22 @@
 import {Cell} from "../model/Cell";
+import {GameConverter} from "./GameConverter";
 
 export class MapProcessor {
 
+  private readonly cellsHashMap: Map<string, Cell>;
   private readonly canvasWidth: number;
   private readonly canvasHeight: number;
   private readonly cellSize: number;
 
-  constructor(canvasWidth: number, canvasHeight: number, cellSize: number) {
+  constructor(canvasWidth: number, canvasHeight: number, cellSize: number, cellsList: Cell[]) {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.cellSize = cellSize;
+    this.cellsHashMap = new GameConverter().convertCellsArrayToMap(cellsList);
   }
 
-  public getCellFromMapByCoordinates(x: number, y: number, map: Map<string, Cell>) : Cell{
-    return map.get(x.toString() + "::" + y.toString())!;
+  public getCellFromMapByCoordinates(x: number, y: number) : Cell{
+    return this.cellsHashMap.get(x.toString() + "::" + y.toString())!;
   }
 
   public getCellNumberX(x: number): number {
