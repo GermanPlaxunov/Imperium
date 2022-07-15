@@ -1,4 +1,4 @@
-import {MapProcessor} from "../../../map/MapProcessor";
+import {MapProcessor} from "./MapProcessor";
 
 export class CellInformationProvider {
 

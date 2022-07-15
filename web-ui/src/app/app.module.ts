@@ -6,13 +6,15 @@ import { GameWindowComponent } from './components/app/game-window/game-window.co
 import {HttpClientModule} from "@angular/common/http";
 import { ActionPanelComponent } from './components/app/action-panel/action-panel.component';
 import { InfoPanelComponent } from './components/app/info-panel/info-panel.component';
+import { MapPanelComponent } from './components/app/map-panel/map-panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameWindowComponent,
     ActionPanelComponent,
-    InfoPanelComponent
+    InfoPanelComponent,
+    MapPanelComponent
   ],
   imports: [
     BrowserModule,

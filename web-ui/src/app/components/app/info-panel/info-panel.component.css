@@ -1,7 +1,7 @@
 .game-info-panel {
   position: relative;
-  bottom: 1100px;
-  left: 20px;
+  top: 10px;
+  left: 10px;
   border: 2px solid blue;
   width: 250px;
   height: 600px;

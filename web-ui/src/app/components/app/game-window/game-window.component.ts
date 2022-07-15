@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MapRenderer} from "../../../map/MapRenderer";
 import {GameMap} from "../../../model/GameMap";
 import {GameMapService} from "../../../services/GameMapService";
 import {Cell} from "../../../model/Cell";
 import {MapProcessor} from "../../../map/MapProcessor";
-import {CellInformationProvider} from "../info-panel/CellInformationProvider";
+import {CellInformationProvider} from "../../../map/CellInformationProvider";
 
 @Component({
   selector: 'app-game-window',
@@ -13,16 +13,15 @@ import {CellInformationProvider} from "../info-panel/CellInformationProvider";
 })
 export class GameWindowComponent implements OnInit {
 
-  private canvas: HTMLCanvasElement;
-
-  private mapRenderer?: MapRenderer;
-  private mapProcessor?: MapProcessor;
-  private cellInfoProvider?: CellInformationProvider;
-
-  gameMap?: GameMap;
+  @ViewChild('mapPanelComponent') mapPanelComponent?: ElementRef;
+  @Output() mapRenderer?: MapRenderer;
+  @Output() mapProcessor?: MapProcessor;
+  @Output() cellInfoProvider?: CellInformationProvider;
+  @Output() gameMap?: GameMap;
+  @Input() canvas?: HTMLCanvasElement;
 
   constructor(private gameMapService: GameMapService) {
-    this.canvas = document.getElementById("mapCanvas") as HTMLCanvasElement;
+    this.canvas = this.mapPanelComponent?.nativeElement.getElementById("mapCanvas") as HTMLCanvasElement;
   }
 
   ngOnInit(): void {
@@ -50,15 +49,5 @@ export class GameWindowComponent implements OnInit {
     let canvas = document.getElementById("mapCanvas") as HTMLCanvasElement;
     let context = canvas.getContext("2d")!;
     this.mapRenderer!.renderMap(context);
-  }
-
-  onClick($event: MouseEvent) {
-    let x = $event.clientX;
-    let y = $event.clientY;
-    let canvas = document.getElementById("mapCanvas") as HTMLCanvasElement;
-    let rect = canvas.getBoundingClientRect();
-    this.cellInfoProvider?.fillCellData(x, y, rect);
-    let context = canvas.getContext("2d")!;
-    this.mapRenderer!.selectMapCell(context, this.gameMap!, x - rect.left, y - rect.top);
   }
 }
