@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActionService} from "../../../services/ActionService";
 
 @Component({
   selector: 'app-action-panel',
@@ -7,7 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActionPanelComponent implements OnInit {
 
-  constructor() { }
+  showAttackWindow: boolean = false;
+  queue?: string[];
+  currentActor?: string;
+
+  constructor(private actionService: ActionService) {
+    actionService.getCurrentActor().subscribe((q) => {
+      this.currentActor = q.currentActor;
+      this.queue = q.queue;
+    });
+  }
 
   ngOnInit(): void {
   }

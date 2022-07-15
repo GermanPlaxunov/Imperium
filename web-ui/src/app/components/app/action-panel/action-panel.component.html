@@ -1,3 +1,21 @@
 <div class="game-action-panel">
   <button class="action-panel-button">Save Game</button>
+  <div class="action-panel-border"></div>
+  <div>
+    <button class="action-panel-button" (click)="showAttackWindow = !showAttackWindow">Attack</button>
+    <div *ngIf="showAttackWindow">
+      <label for="attackTargetX">X</label>
+      <input type="number" id="attackTargetX" class="action-panel-textarea">
+      <label for="attackTargetY">Y</label>
+      <input type="number" id="attackTargetY" class="action-panel-textarea">
+    </div>
+    <div class="action-panel-border"></div>
+    <div class="action-panel-actor-color">
+      <label for="current-actor">Current Actor</label>
+      <textarea id="current-actor" class="action-panel-textarea" [textContent]="currentActor"></textarea>
+    </div>
+  </div>
+  <div>
+    <button id="endOfAction" class="action-panel-button">End of Action</button>
+  </div>
 </div>
