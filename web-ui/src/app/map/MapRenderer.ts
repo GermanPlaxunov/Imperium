@@ -1,64 +1,50 @@
 import {GameMap} from "../model/GameMap";
+import {MapProcessor} from "./MapProcessor";
+import {GameConverter} from "./GameConverter";
+import {Cell} from "../model/Cell";
 
 export class MapRenderer {
 
+  private readonly cellHashMap: Map<string, Cell>;
   private readonly canvasWidth: number;
   private readonly canvasHeight: number;
   private readonly cellSize: number;
 
-  constructor(width: number, height: number, cellSize: number) {
-    this.canvasWidth = width;
-    this.canvasHeight = height;
-    this.cellSize = cellSize;
+  private mapProcessor: MapProcessor;
+
+  constructor(gameMap: GameMap) {
+    this.cellHashMap = new GameConverter().convertCellsArrayToMap(gameMap.cells);
+    this.mapProcessor = new MapProcessor(gameMap.width, gameMap.height, gameMap.cellSize, gameMap.cells);
+    this.canvasWidth = gameMap.width;
+    this.canvasHeight = gameMap.height;
+    this.cellSize = gameMap.cellSize;
   }
 
-  public renderMap(canvasContext: any, map: GameMap) {
-    let cellNumber = 0;
-    for (let i = 0; i < map.height / map.cellSize; i++) {
-      for (let j = 0; j < map.width / map.cellSize; j++) {
-        canvasContext.fillStyle = map.cells[cellNumber++].color;
-        canvasContext.fillRect(i * map.cellSize, j * map.cellSize, map.cellSize, map.cellSize);
-      }
+  public renderMap(canvasContext: any) {
+    this.cellHashMap.forEach((cell) => {
+      canvasContext.fillStyle = cell.color;
+      canvasContext.fillRect(cell.x * this.cellSize, cell.y * this.cellSize, this.cellSize, this.cellSize);
+    })
+  }
+
+  public selectMapCell(canvasContext: any, map: GameMap, x: number, y: number) {
+    if (map.selected != null) {
+      this.clearCurrentSelectedCell(map, canvasContext);
     }
-  }
-
-  public selectMapCell(canvasContext: any, x: number, y: number) {
-    console.log(x + " " + y);
-    let x_cell = this.getCellNumberX(x);
-    let y_cell = this.getCellNumberY(y);
+    let x_cell = this.mapProcessor.getCellNumberX(x);
+    let y_cell = this.mapProcessor.getCellNumberY(y);
+    map.selected = this.mapProcessor.getCellFromMapByCoordinates(x_cell, y_cell)
     canvasContext.fillStyle = "black";
-    canvasContext.rect(x_cell * this.cellSize, y_cell * this.cellSize, this.cellSize, this.cellSize);
-    canvasContext.stroke();
-    canvasContext.clearRect(50, 50, 50, 50);
+    canvasContext.strokeRect((x_cell * this.cellSize), (y_cell * this.cellSize), this.cellSize, this.cellSize);
   }
 
-  private getCellNumberX(x: number): number {
-    let mapSize = this.canvasWidth / this.cellSize;
-    let x_1 = 0;
-    let x_2 = x_1 + this.cellSize;
-
-    for (let i = 0; i < mapSize; i++) {
-      if ((x_1 < x) && (x_2 > x)) {
-        return i;
-      }
-      x_1 = x_2;
-      x_2 += this.cellSize;
-    }
-    return 0;
-  }
-
-  private getCellNumberY(y: number): number {
-    let mapSize = this.canvasWidth / this.cellSize;
-    let y_1 = 0;
-    let y_2 = y_1 + this.cellSize;
-    for (let i = 0; i < mapSize; i++) {
-      if ((y_1 < y) && (y_2 > y)) {
-        return i;
-      }
-      y_1 = y_2;
-      y_2 += this.cellSize;
-    }
-    return 0;
+  private clearCurrentSelectedCell(map: GameMap, ctx: any) {
+    let selectedX = map.selected.x;
+    let selectedY = map.selected.y;
+    ctx.clearRect(selectedX * this.cellSize, selectedY * this.cellSize, this.cellSize, this.cellSize);
+    ctx.fillStyle = this.mapProcessor.getCellFromMapByCoordinates(selectedX, selectedY).color;
+    ctx.fillRect((selectedX * this.cellSize) - 1, (selectedY * this.cellSize) - 1, this.cellSize + 2, this.cellSize + 2);
+    ctx.stroke();
   }
 
 }

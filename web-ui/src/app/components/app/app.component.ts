@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'web-ui';
+
+  getCanvas() {
+    return document.getElementById("mapCanvas") as HTMLCanvasElement;
+  }
 }

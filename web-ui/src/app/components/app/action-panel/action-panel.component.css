@@ -1,0 +1,32 @@
+.game-action-panel {
+  position: relative;
+  left: 830px;
+  bottom: 1100px;
+  width: 350px;
+  height: 600px;
+  border: 2px solid blue;
+}
+
+.action-panel-button {
+  margin: 3px 3px 3px 3px;
+  font-size: 16px;
+}
+
+.action-panel-border {
+  width: 350px;
+  height: 1px;
+  border: 2px solid black;
+}
+
+.action-panel-textarea {
+  margin: 3px 3px 3px 3px;
+  width: 80px;
+  height: 20px;
+  border: 1px solid black;
+}
+
+.action-panel-actor-color {
+  width: 350px;
+  height: 50px;
+  border: 1px solid black;
+}

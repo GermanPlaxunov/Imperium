@@ -1,0 +1,15 @@
+.game-info-panel {
+  position: relative;
+  top: 10px;
+  left: 10px;
+  border: 2px solid blue;
+  width: 250px;
+  height: 600px;
+}
+
+.game-info-label {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px 5px 3px 15px;
+  height: 20px;
+}

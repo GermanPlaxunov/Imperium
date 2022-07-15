@@ -1,0 +1,18 @@
+<div class="main-game-panel">
+
+  <app-info-panel #infoPanelComponent [canvas]="canvas"
+                  [mapProcessor]="mapProcessor"
+                  [cellInfoProvider]="cellInfoProvider">
+  </app-info-panel>
+
+  <app-map-panel #mapPanelComponent [gameMap]="gameMap"
+                 [mapProcessor]="mapProcessor"
+                 [mapRenderer]="mapRenderer"
+                 [canvas]="canvas"
+                 (click)="mapPanelComponent.onMapCellClick($event); infoPanelComponent.fillCellData($event);">
+  </app-map-panel>
+
+  <app-action-panel #actionPanelComponent>
+  </app-action-panel>
+
+</div>
